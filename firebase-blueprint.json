@@ -613,6 +613,221 @@
         "createdAt",
         "updatedAt"
       ]
+    },
+    "WeeklyReport": {
+      "title": "WeeklyReport",
+      "description": "Weekly learning progress report created by assistant or parent with parent review note.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentUid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "parentUid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "assistantUid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "authorName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "authorRole": {
+          "type": "string",
+          "enum": ["parent", "assistant"]
+        },
+        "weekLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "weekStartDate": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "weekEndDate": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "completedTasksCount": {
+          "type": "number"
+        },
+        "totalTasksCount": {
+          "type": "number"
+        },
+        "focusMinutesWeek": {
+          "type": "number"
+        },
+        "strengths": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200
+        },
+        "improvements": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "nextWeekPlan": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "parentNote": {
+          "type": "string",
+          "maxLength": 800
+        },
+        "status": {
+          "type": "string",
+          "enum": ["published", "reviewed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "studentId",
+        "studentUid",
+        "parentUid",
+        "assistantUid",
+        "createdBy",
+        "authorName",
+        "authorRole",
+        "weekLabel",
+        "weekStartDate",
+        "weekEndDate",
+        "completedTasksCount",
+        "totalTasksCount",
+        "focusMinutesWeek",
+        "strengths",
+        "improvements",
+        "nextWeekPlan",
+        "parentNote",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "TimetableEntry": {
+      "title": "TimetableEntry",
+      "description": "Weekly recurring study timetable slot shared across student, parent, and assistant.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentUid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "parentUid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "assistantUid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dayOfWeek": {
+          "type": "string",
+          "enum": ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+        },
+        "startTime": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10
+        },
+        "endTime": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "topic": {
+          "type": "string",
+          "maxLength": 140
+        },
+        "studyType": {
+          "type": "string",
+          "enum": ["tutor", "self", "school", "extra"]
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 400
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "studentId",
+        "studentUid",
+        "parentUid",
+        "assistantUid",
+        "createdBy",
+        "dayOfWeek",
+        "startTime",
+        "endTime",
+        "subject",
+        "topic",
+        "studyType",
+        "note",
+        "createdAt",
+        "updatedAt"
+      ]
     }
   },
   "firestore": {
@@ -651,6 +866,14 @@
     "/feedback_tickets/{ticketId}": {
       "schema": { "$ref": "#/entities/FeedbackTicket" },
       "description": "Parent feedback, help requests, and assistant management notes."
+    },
+    "/weekly_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/WeeklyReport" },
+      "description": "Weekly study progress reports shared between assistant and parent."
+    },
+    "/timetable_entries/{entryId}": {
+      "schema": { "$ref": "#/entities/TimetableEntry" },
+      "description": "Student weekly study timetable synced across student, parent, and assistant."
     }
   }
 }
